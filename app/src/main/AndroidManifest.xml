@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GetUpRyota">
         <activity
+            android:name=".AlarmView"
+            android:exported="false" />
+        <activity
+            android:name=".list.Alarm_List_View"
+            android:exported="false" />
+        <activity
             android:name=".SettingAlarm"
             android:exported="false" />
         <activity
