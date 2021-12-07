@@ -1,5 +1,6 @@
 package jp.ac.it_college.std.s20007.getupryota
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ListView
@@ -12,6 +13,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        binding.addButton.setOnClickListener{ClickButton()}
 
         val alarms =
             mutableListOf<alarm>(
@@ -31,5 +34,11 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
+    }
+
+    private fun ClickButton() {
+        val intent = Intent(this, SettingAlarm::class.java)
+        startActivity(intent)
     }
 }

@@ -39,8 +39,6 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="52dp"
         android:minHeight="48dp"
-        android:thumb="@drawable/switch_thumb"
-        android:track="@drawable/swich_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

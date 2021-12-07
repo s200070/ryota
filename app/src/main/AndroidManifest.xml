@@ -10,6 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GetUpRyota">
         <activity
+            android:name=".repeatWeek"
+            android:exported="false" />
+        <activity
+            android:name=".alarmName"
+            android:exported="false" />
+        <activity
+            android:name=".questionFormat"
+            android:exported="false" />
+        <activity
+            android:name=".soundSelect"
+            android:exported="false" />
+        <activity
             android:name=".AlarmView"
             android:exported="false" />
         <activity
