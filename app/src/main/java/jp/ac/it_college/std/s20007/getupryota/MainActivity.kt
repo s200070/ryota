@@ -14,7 +14,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.addButton.setOnClickListener{ClickButton()}
+        binding.addButton.setOnClickListener{
+            val intent = Intent(this, SettingAlarm::class.java)
+            startActivity(intent)
+        }
+
 
         val alarms =
             mutableListOf<alarm>(
@@ -34,11 +38,5 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
-    }
-
-    private fun ClickButton() {
-        val intent = Intent(this, SettingAlarm::class.java)
-        startActivity(intent)
     }
 }
