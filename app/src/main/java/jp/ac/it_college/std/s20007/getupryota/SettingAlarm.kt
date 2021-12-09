@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.service.quickaccesswallet.GetWalletCardsCallback
 import android.view.accessibility.AccessibilityManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -23,7 +24,8 @@ class SettingAlarm : AppCompatActivity() {
 
         binding.alarmNameAdd.setOnClickListener {
             val intent = Intent(this, alarmName::class.java)
-            launcher.launch(intent)
+            getResult.launch(intent)
+
         }
 
         binding.soundButton.setOnClickListener {
@@ -43,37 +45,15 @@ class SettingAlarm : AppCompatActivity() {
 
         binding.re.setOnClickListener{
         }
-
-
     }
 
-    private val launcher = registerForActivityResult(
-        contract = ActivityResultContracts.StartIntentSenderForResult()
-    ) { result ->
-        if (result.resultCode != RESULT_OK) {
-
+    private val getResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val value = it.data?.getStringExtra("NAME")
+                binding.alarmNameAdd.text = value
+            }
         }
-        val msg = result.data?.getStringExtra("NAME")
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode != 9) {return}
-
-
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            val message = data.getStringExtra("message")
-            binding.alarmName.text = message
-        }else if (resultCode == Activity.RESULT_CANCELED) {
-            binding.alarmName.text = "端末の戻るボタン"
-        }
-
-    }
-
-    fun zzz() {
-        val intent = Intent(this, alarmName::class.java)
-        startActivityForResult(intent, 9)
-    }
-
 }
