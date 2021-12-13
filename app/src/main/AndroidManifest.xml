@@ -10,6 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GetUpRyota">
         <activity
+            android:name=".format.exerciseQuiz"
+            android:exported="true" />
+        <activity
+            android:name=".format.EnglishWordsQuiz"
+            android:exported="true" />
+        <activity
+            android:name=".format.CalculationQuiz"
+            android:exported="true" />
+        <activity
+            android:name=".format.CalculationQUIZ"
+            android:exported="true" />
+        <activity
             android:name=".repeatWeek"
             android:exported="false" />
         <activity
@@ -30,6 +42,9 @@
         <activity
             android:name=".SettingAlarm"
             android:exported="false" />
+        <activity
+            android:name=".AddAlarm"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

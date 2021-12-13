@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">GetUpRyota</string>
+    <string name="Cansel">キャンセル</string>
+    <string name="cansel">キャンセル</string>
+    <string name="AlarmAdd">追加</string>
+    <string name="AlarmAddText">アラームを追加</string>
+    <string name="time">時間</string>
+    <string name="quiz">出題形式</string>
+    <string name="AlarmName">アラーム名</string>
+    <string name="repeto">繰り返し</string>
+    <string name="soundView">サウンド</string>
+    <string name="snoozeView">スヌーズ</string>
+    <string name="weekName">選択曜日名</string>
+    <string name="slectSoundName">選択サウンド名</string>
+    <string name="textViews">計算して目を覚ませ！</string>
+    <string name="sahenView">10</string>
+    <string name="calculationView">+</string>
+    <string name="uhenView">10</string>
+    <string name="answerView">= □</string>
+    <string name="textViews2">英単語解いて目を覚ませ！</string>
+    <string name="questionView">英単語問題</string>
 </resources>
