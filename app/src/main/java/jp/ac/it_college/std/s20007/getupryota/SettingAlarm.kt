@@ -24,8 +24,7 @@ class SettingAlarm : AppCompatActivity() {
 
         binding.alarmNameAdd.setOnClickListener {
             val intent = Intent(this, alarmName::class.java)
-            getResult.launch(intent)
-
+            getName.launch(intent)
         }
 
         binding.soundButton.setOnClickListener {
@@ -47,7 +46,7 @@ class SettingAlarm : AppCompatActivity() {
         }
     }
 
-    private val getResult =
+    private val getName =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {

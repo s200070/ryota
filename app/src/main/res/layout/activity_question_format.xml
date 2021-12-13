@@ -39,8 +39,10 @@
         android:id="@+id/english"
         android:layout_width="135dp"
         android:layout_height="90dp"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="60dp"
         android:text="英単語クイズ"
+        app:layout_constraintEnd_toStartOf="@+id/exercise"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/exercise" />
 
@@ -49,7 +51,7 @@
         android:layout_width="135dp"
         android:layout_height="90dp"
         android:layout_marginTop="208dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginEnd="50dp"
         android:text="エクササイズ"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/format" />
