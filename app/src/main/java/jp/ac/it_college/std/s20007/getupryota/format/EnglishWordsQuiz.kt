@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import jp.ac.it_college.std.s20007.getupryota.databinding.ActivityEnglishWordsQuizBinding
-import jp.ac.it_college.std.s20007.getupryota.databinding.ActivityMainBinding
+
 
 class EnglishWordsQuiz : AppCompatActivity() {
 
