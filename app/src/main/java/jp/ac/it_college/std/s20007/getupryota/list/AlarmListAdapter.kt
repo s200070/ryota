@@ -18,7 +18,7 @@ class AlarmListAdapter(private val context: Context) : BaseAdapter(){
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View =
         ((convertView as? AlarmView) ?: AlarmView(context)).apply {
-            setArarm(alarms[position])
+            setAlarm(alarms[position])
         }
 
 

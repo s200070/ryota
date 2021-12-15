@@ -2,17 +2,10 @@ package jp.ac.it_college.std.s20007.getupryota
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.service.quickaccesswallet.GetWalletCardsCallback
-import android.view.accessibility.AccessibilityManager
-import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import jp.ac.it_college.std.s20007.getupryota.databinding.ActivitySettingAlarmBinding
-import java.util.Arrays.toString
-import kotlin.contracts.contract
 
 class SettingAlarm : AppCompatActivity() {
     private lateinit var binding: ActivitySettingAlarmBinding
@@ -28,8 +21,9 @@ class SettingAlarm : AppCompatActivity() {
         }
 
         binding.soundButton.setOnClickListener {
-            val intent = Intent(this, soundSelect::class.java)
+            val intent = Intent(this, SoundSelect::class.java)
             startActivity(intent)
+
         }
 
         binding.formatButton.setOnClickListener {

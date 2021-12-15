@@ -27,7 +27,7 @@ class AlarmView: FrameLayout {
         format_text = findViewById(R.id.formats) as TextView
     }
 
-    fun setArarm(alarm: alarm) {
+    fun setAlarm(alarm: alarm) {
         val form = mapOf(0 to "英単語", 1 to "エクササイズ", 2 to "計算問題", 3 to "パズル", 4 to "なし")
         time_text?.text = alarm.time
         name_text?.text = alarm.name
