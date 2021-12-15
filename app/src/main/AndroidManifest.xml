@@ -22,9 +22,6 @@
             android:name=".format.CalculationQuiz"
             android:exported="true" />
         <activity
-            android:name=".format.CalculationQUIZ"
-            android:exported="true" />
-        <activity
             android:name=".repeatWeek"
             android:exported="false" />
         <activity
@@ -34,20 +31,12 @@
             android:name=".questionFormat"
             android:exported="false" />
         <activity
-            android:name=".soundSelect"
-            android:exported="false" />
-        <activity
-            android:name=".AlarmView"
-            android:exported="false" />
-        <activity
-            android:name=".list.Alarm_List_View"
+            android:name=".SoundSelect"
             android:exported="false" />
         <activity
             android:name=".SettingAlarm"
             android:exported="false" />
-        <activity
-            android:name=".AddAlarm"
-            android:exported="true" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

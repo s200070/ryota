@@ -1,6 +1,7 @@
 package jp.ac.it_college.std.s20007.getupryota
 
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -43,6 +44,18 @@ class questionFormat : AppCompatActivity() {
 
         binding.tryButton.setOnClickListener {
             intents(select)
+        }
+
+
+        binding.formatAdd.setOnClickListener {
+            val buttons = mapOf(0 to binding.english, 1 to binding.exercise, 2 to binding.calculation, 3 to binding.puzzle, 4 to binding.none)
+            val intent = Intent()
+            val name = buttons[select]!!.text.toString()
+            intent.putExtra("NAME", name)
+            intent.putExtra("NUMBER", select)
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+
         }
 
 
