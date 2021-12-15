@@ -34,12 +34,12 @@ class SettingAlarm : AppCompatActivity() {
 
         binding.formatButton.setOnClickListener {
             val intent = Intent(this, questionFormat::class.java)
-            startActivity(intent)
+            getFormat.launch(intent)
         }
 
         binding.weeksButton.setOnClickListener {
             val intent = Intent(this, repeatWeek::class.java)
-            startActivity(intent)
+            getWeek.launch(intent)
         }
 
         binding.re.setOnClickListener{
@@ -53,6 +53,30 @@ class SettingAlarm : AppCompatActivity() {
             if (it.resultCode == Activity.RESULT_OK) {
                 val value = it.data?.getStringExtra("NAME")
                 binding.alarmNameAdd.text = value
+            }
+        }
+
+
+    private val getFormat =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val value = it.data?.getStringExtra("NAME")
+                val number = it.data?.getIntExtra("NUMBER", 0)
+                binding.formatButton.text = value
+            }
+        }
+
+    private val getWeek =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val value = it.data?.getStringArrayListExtra("NAME")
+                binding.weeksButton.text = value.toString()
+                println(value)
+
             }
         }
 }

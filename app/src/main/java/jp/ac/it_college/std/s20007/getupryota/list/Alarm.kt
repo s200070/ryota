@@ -5,5 +5,6 @@ data class alarm(
     val time:String,
     val name:String,
     val messege:String,
-    val onoff:Boolean
+    val onoff:Boolean,
+    val format: Int
 )

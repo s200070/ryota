@@ -22,10 +22,10 @@ class MainActivity : AppCompatActivity() {
 
         val alarms =
             mutableListOf<alarm>(
-                alarm("00:00","ryouta","平日",true),
-                alarm("00:00","taiki","祝日",false),
-                alarm("00:00","taiga","月火水木",true),
-                alarm("00:00","eito","毎日",true),
+                alarm("00:00","ryouta","平日",true, 0),
+                alarm("00:00","taiki","祝日",false, 1),
+                alarm("00:00","taiga","月火水木",true, 2),
+                alarm("00:00","eito","毎日",true, 3),
             )
 
         val listAdapter = AlarmListAdapter(applicationContext)
