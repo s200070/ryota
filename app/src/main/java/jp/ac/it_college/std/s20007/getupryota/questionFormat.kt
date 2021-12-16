@@ -9,7 +9,7 @@ import android.os.Bundle
 import jp.ac.it_college.std.s20007.getupryota.databinding.ActivityQuestionFormatBinding
 import jp.ac.it_college.std.s20007.getupryota.format.CalculationQuiz
 import jp.ac.it_college.std.s20007.getupryota.format.EnglishWordsQuiz
-import jp.ac.it_college.std.s20007.getupryota.format.Puzzle
+import jp.ac.it_college.std.s20007.getupryota.format.OmoroQuiz
 import jp.ac.it_college.std.s20007.getupryota.format.ExerciseQuiz
 
 
@@ -64,7 +64,7 @@ class questionFormat : AppCompatActivity() {
     }
 
     private fun intents(n: Int) {
-        val buttons = mapOf(0 to EnglishWordsQuiz::class.java, 1 to ExerciseQuiz::class.java, 2 to CalculationQuiz::class.java, 3 to Puzzle::class.java)
+        val buttons = mapOf(0 to EnglishWordsQuiz::class.java, 1 to ExerciseQuiz::class.java, 2 to CalculationQuiz::class.java, 3 to OmoroQuiz::class.java)
         val intent = Intent(this, buttons[n])
         startActivity(intent)
     }

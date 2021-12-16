@@ -11,9 +11,9 @@
         <entry key="app/src/main/res/layout/activity_english_words_quiz.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_exercise_quiz.xml" value="0.346875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2703804347826087" />
-        <entry key="app/src/main/res/layout/activity_puzzle.xml" value="0.14893617021276595" />
+        <entry key="app/src/main/res/layout/activity_omoro_quiz.xml" value="0.346875" />
         <entry key="app/src/main/res/layout/activity_question_format.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_repeat_week.xml" value="0.14994934143870314" />
+        <entry key="app/src/main/res/layout/activity_repeat_week.xml" value="0.2826086956521739" />
         <entry key="app/src/main/res/layout/activity_setting_alarm.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_sound_select.xml" value="0.346875" />
       </map>

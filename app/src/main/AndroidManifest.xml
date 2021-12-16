@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GetUpRyota">
         <activity
-            android:name=".format.Puzzle"
+            android:name=".format.OmoroQuiz"
             android:exported="false" />
         <activity
             android:name=".format.ExerciseQuiz"

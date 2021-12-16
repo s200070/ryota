@@ -19,4 +19,6 @@
     <string name="answerView">= □</string>
     <string name="textViews2">英単語解いて目を覚ませ！</string>
     <string name="questionView">英単語問題</string>
+    <string name="textView7">問題解いて目を覚ませ！</string>
+    <string name="questionView2">おもろ問題</string>
 </resources>
