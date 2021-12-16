@@ -8,6 +8,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import jp.ac.it_college.std.s20007.getupryota.databinding.ActivitySettingAlarmBinding
 
 class SettingAlarm : AppCompatActivity() {
+    var time = ""
+    var name = ""
+    var sound = ""
+    var format = 0
+    var week = ""
+    var re = false
     private lateinit var binding: ActivitySettingAlarmBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +42,19 @@ class SettingAlarm : AppCompatActivity() {
             getWeek.launch(intent)
         }
 
-        binding.re.setOnClickListener{
+        binding.addKeep.setOnClickListener {
+            val intent = Intent()
+            time = binding.editTextTime.text.toString()
+            re = binding.re.isChecked
+            intent.putExtra("TIME", time)
+            intent.putExtra("NAME", name)
+            intent.putExtra("SOUND", sound)
+            intent.putExtra("FORMAT", format)
+            intent.putExtra("WEEK", week)
+            intent.putExtra("RE", re)
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+
         }
     }
 
@@ -47,6 +65,7 @@ class SettingAlarm : AppCompatActivity() {
             if (it.resultCode == Activity.RESULT_OK) {
                 val value = it.data?.getStringExtra("NAME")
                 binding.alarmNameAdd.text = value
+                name = value.toString()
             }
         }
 
@@ -59,6 +78,7 @@ class SettingAlarm : AppCompatActivity() {
                 val value = it.data?.getStringExtra("NAME")
                 val number = it.data?.getIntExtra("NUMBER", 0)
                 binding.formatButton.text = value
+                format = number!!
             }
         }
 
@@ -69,7 +89,7 @@ class SettingAlarm : AppCompatActivity() {
             if (it.resultCode == Activity.RESULT_OK) {
                 val value = it.data?.getStringArrayListExtra("NAME")
                 binding.weeksButton.text = value.toString()
-                println(value)
+                week = value.toString()
 
             }
         }
