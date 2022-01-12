@@ -10,7 +10,7 @@ import jp.ac.it_college.std.s20007.getupryota.databinding.ActivityRepeatWeekBind
 
 class repeatWeek : AppCompatActivity() {
     private lateinit var binding: ActivityRepeatWeekBinding
-    val week = arrayListOf<String>()
+    val week = arrayListOf<Int>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRepeatWeekBinding.inflate(layoutInflater)
@@ -20,9 +20,9 @@ class repeatWeek : AppCompatActivity() {
 
         binding.add.setOnClickListener {
             val weeks = arrayListOf(binding.sunday, binding.monday, binding.tuesday, binding.wednesday, binding.thursday, binding.friday, binding.friday)
-            for (w in weeks) {
-                if (w.isChecked) {
-                    week.add(w.text.toString())
+            for (w in 0 until weeks.size) {
+                if (weeks[w].isChecked) {
+                    week.add(w)
             } }
 
 

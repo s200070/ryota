@@ -8,12 +8,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import jp.ac.it_college.std.s20007.getupryota.databinding.ActivitySettingAlarmBinding
 
 class SettingAlarm : AppCompatActivity() {
-    var time = ""
-    var name = ""
-    var sound = ""
-    var format = 0
-    var week = ""
-    var re = false
+    private var time = ""
+    private var name = ""
+    private var sound = ""
+    private var format = 0
+    private var week = ""
+    private var re = false
     private lateinit var binding: ActivitySettingAlarmBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,8 +87,13 @@ class SettingAlarm : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                val value = it.data?.getStringArrayListExtra("NAME")
-                binding.weeksButton.text = value.toString()
+                val value = it.data?.getIntegerArrayListExtra("NAME")
+                var text = ""
+                val we = mapOf(0 to "日", 1 to "月", 2 to "火", 3 to "水", 4 to "木", 5 to "金", 6 to "土")
+                for (v in value!!) {
+                    text += we[v]
+                }
+                binding.weeksButton.text = text
                 week = value.toString()
 
             }
