@@ -1,13 +1,9 @@
 package jp.ac.it_college.std.s20007.getupryota
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import android.widget.Switch
 import android.widget.TextView
-import org.w3c.dom.Text
 
 class AlarmView: FrameLayout {
     constructor(context: Context): super(context)
@@ -18,13 +14,15 @@ class AlarmView: FrameLayout {
     var repeat: TextView? = null
     var format_text: TextView? = null
 
+
     init {
         LayoutInflater.from(context).inflate(R.layout.activity_alarm_view, this)
         time_text = findViewById(R.id.time_text) as TextView
         name_text = findViewById(R.id.name_text) as TextView
-        mase_text = findViewById(R.id.MaseText) as TextView
+        mase_text = findViewById(R.id.weekText) as TextView
         repeat = findViewById(R.id.repeat) as TextView
         format_text = findViewById(R.id.formats) as TextView
+
     }
 
     fun setAlarm(alarm: alarm) {
@@ -32,7 +30,7 @@ class AlarmView: FrameLayout {
         if (alarm.repeat) { repeat?.text = "ON"}else{repeat?.text = "OFF"}
         time_text?.text = alarm.time
         name_text?.text = alarm.name
-        mase_text?.text = alarm.massage
+        mase_text?.text = alarm.week
         format_text?.text = form[alarm.format]
     }
 

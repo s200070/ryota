@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import jp.ac.it_college.std.s20007.getupryota.databinding.ActivitySoundSelectBinding
 
+
 class SoundSelect : AppCompatActivity() {
     private lateinit var binding: ActivitySoundSelectBinding
     override fun onCreate(savedInstanceState: Bundle?) {

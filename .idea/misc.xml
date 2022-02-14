@@ -16,6 +16,8 @@
         <entry key="app/src/main/res/layout/activity_repeat_week.xml" value="0.2826086956521739" />
         <entry key="app/src/main/res/layout/activity_setting_alarm.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_sound_select.xml" value="0.346875" />
+        <entry key="app/src/main/res/layout/activity_time_picker_dialog.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/timepickerdialog.xml" value="0.1" />
       </map>
     </option>
   </component>
