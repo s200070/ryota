@@ -19,6 +19,7 @@ import jp.ac.it_college.std.s20007.getupryota.list.AlarmListAdapter
 import jp.ac.it_college.std.s20007.getupryota.list.MyReceiver
 import java.lang.Exception
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -47,6 +48,11 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.addButton.setOnClickListener {
+            val intent = Intent(this, SettingAlarm::class.java)
+            startActivity(intent)
+        }
+
+        binding.listview.setOnItemClickListener { parent, view, position, id ->
             val intent = Intent(this, SettingAlarm::class.java)
             startActivity(intent)
         }
@@ -88,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             while (cursor.moveToNext()) {
                 val id = cursor.let {
                     val index = it.getColumnIndex("_id")
-                    it.getString(index)
+                    it.getLong(index)
                 }
                 val time = cursor.let {
                     val index = it.getColumnIndex("time")
@@ -96,6 +102,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 val name = cursor.let {
                     val index = it.getColumnIndex("name")
+                    it.getString(index)
+                }
+                val sound = cursor.let {
+                    val index = it.getColumnIndex("sound")
                     it.getString(index)
                 }
                 val sun = cursor.let {
@@ -147,7 +157,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-                alarms.add(alarm(time, name, text, repeat.toBoolean(), format.toInt()))
+                alarms.add(alarm(id, time, name, sound, text, repeat.toBoolean(), format.toInt()))
             }
             cursor.close()
         }
@@ -160,20 +170,7 @@ class MainActivity : AppCompatActivity() {
         binding.listview.adapter = listAdapter
     }
 
-    private fun makeAlarm() {
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val calendar = Calendar.getInstance()
-        val intent = Intent(this, MyReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT
-        )
-        calendar.add(Calendar.SECOND, 2)
-        alarmManager.setExact( //Required minSdkVersion >= 19　・・・※１
-            AlarmManager.RTC,
-            calendar.timeInMillis,
-            pendingIntent
-        )
-    }
+
 
 
 }

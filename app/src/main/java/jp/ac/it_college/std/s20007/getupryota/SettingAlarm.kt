@@ -3,13 +3,18 @@ package jp.ac.it_college.std.s20007.getupryota
 import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import jp.ac.it_college.std.s20007.getupryota.Database.DatabaseHelper
 import jp.ac.it_college.std.s20007.getupryota.databinding.ActivitySettingAlarmBinding
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class SettingAlarm : AppCompatActivity() {
@@ -33,12 +38,18 @@ class SettingAlarm : AppCompatActivity() {
     private lateinit var binding: ActivitySettingAlarmBinding
     private lateinit var _helper: DatabaseHelper
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivitySettingAlarmBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        val current = LocalTime.now()
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        val result = current.format(formatter)
+
         time_et = binding.editTextTime
+        time_et.setText(result)
 
         time_et.setOnClickListener {
             showTimePikerDialog()
@@ -51,7 +62,7 @@ class SettingAlarm : AppCompatActivity() {
 
         binding.soundButton.setOnClickListener {
             val intent = Intent(this, SoundSelect::class.java)
-            startActivity(intent)
+            getSound.launch(intent)
 
         }
 
@@ -98,9 +109,20 @@ class SettingAlarm : AppCompatActivity() {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val value = it.data?.getStringExtra("NAME")
-                val number = it.data?.getIntExtra("NUMBER", 0)
+                val number = it.data?.getIntExtra("NUMBER", 3)
                 binding.formatButton.text = value
                 format = number!!
+            }
+        }
+
+    private val getSound =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val value = it.data?.getStringExtra("SOUND")
+                binding.soundButton.text = value
+                sound = value.toString()
             }
         }
 
@@ -137,10 +159,13 @@ class SettingAlarm : AppCompatActivity() {
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
             time_et.setText(SimpleDateFormat("HH:mm").format(cal.time))
+            val cal = Calendar.getInstance()
         }
 
         TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
     }
+
+
 
     private fun setAlarms() {
         _helper = DatabaseHelper(this)
@@ -152,8 +177,8 @@ class SettingAlarm : AppCompatActivity() {
 
         val insert = """
             INSERT INTO timer
-            (_id, time, name, sunday, monday, tuesday, wednesday, thursday, friday, saturday, repeat, format)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (_id, time, name, sound, sunday, monday, tuesday, wednesday, thursday, friday, saturday, repeat, format)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """.trimIndent()
 
         val arrayId = db.rawQuery(ids, null)
@@ -175,15 +200,16 @@ class SettingAlarm : AppCompatActivity() {
             bindLong(1, id.toLong())
             bindString(2, time)
             bindString(3, name)
-            bindLong(4, sun.toLong())
-            bindLong(5, mon.toLong())
-            bindLong(6, tues.toLong())
-            bindLong(7, wednes.toLong())
-            bindLong(8, thurs.toLong())
-            bindLong(9, fri.toLong())
-            bindLong(10, satur.toLong())
-            bindString(11, rep)
-            bindLong(12, format.toLong())
+            bindString(4, sound)
+            bindLong(5, sun.toLong())
+            bindLong(6, mon.toLong())
+            bindLong(7, tues.toLong())
+            bindLong(8, wednes.toLong())
+            bindLong(9, thurs.toLong())
+            bindLong(10, fri.toLong())
+            bindLong(11, satur.toLong())
+            bindString(12, rep)
+            bindLong(13, format.toLong())
         }
 
         stmt.executeInsert()

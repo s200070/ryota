@@ -17,6 +17,7 @@ class DatabaseHelper(context: Context) :
                 _id INTEGER PRIMARY KEY,
                 time TEXT,
                 name TEXT,
+                sound TEXT,
                 sunday INTEGER,
                 monday INTEGER,
                 tuesday INTEGER,

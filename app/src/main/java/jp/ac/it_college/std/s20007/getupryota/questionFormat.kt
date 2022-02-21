@@ -16,6 +16,7 @@ import jp.ac.it_college.std.s20007.getupryota.format.ExerciseQuiz
 class questionFormat : AppCompatActivity() {
     private lateinit var binding: ActivityQuestionFormatBinding
     var select = 4
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuestionFormatBinding.inflate(layoutInflater)
@@ -25,7 +26,7 @@ class questionFormat : AppCompatActivity() {
             col(0)
             binding.tryButton.isEnabled = true
         }
-        binding.exercise.setOnClickListener {
+        binding.puzzle.setOnClickListener {
             col(1)
             binding.tryButton.isEnabled = true
         }
@@ -33,12 +34,9 @@ class questionFormat : AppCompatActivity() {
             col(2)
             binding.tryButton.isEnabled = true
         }
-        binding.puzzle.setOnClickListener {
-            col(3)
-            binding.tryButton.isEnabled = true
-        }
+
         binding.none.setOnClickListener {
-            col(4)
+            col(3)
             binding.tryButton.isEnabled = false
         }
 
@@ -48,7 +46,7 @@ class questionFormat : AppCompatActivity() {
 
 
         binding.formatAdd.setOnClickListener {
-            val buttons = mapOf(0 to binding.english, 1 to binding.exercise, 2 to binding.calculation, 3 to binding.puzzle, 4 to binding.none)
+            val buttons = mapOf(0 to binding.english, 1 to binding.puzzle, 2 to binding.calculation,  3 to binding.none)
             val intent = Intent()
             val name = buttons[select]!!.text.toString()
             intent.putExtra("NAME", name)
@@ -64,17 +62,17 @@ class questionFormat : AppCompatActivity() {
     }
 
     private fun intents(n: Int) {
-        val buttons = mapOf(0 to EnglishWordsQuiz::class.java, 1 to ExerciseQuiz::class.java, 2 to CalculationQuiz::class.java, 3 to OmoroQuiz::class.java)
+        val buttons = mapOf(0 to EnglishWordsQuiz::class.java, 1 to OmoroQuiz::class.java, 2 to CalculationQuiz::class.java)
         val intent = Intent(this, buttons[n])
         startActivity(intent)
     }
 
     private fun col(n : Int) {
-        val buttons = mapOf(0 to binding.english, 1 to binding.exercise, 2 to binding.calculation, 3 to binding.puzzle, 4 to binding.none)
+        val buttons = mapOf(0 to binding.english, 1 to binding.puzzle, 2 to binding.calculation, 3 to binding.none)
         buttons[n]!!.setBackgroundColor(Color.	rgb(192,192,192))
         select = n
 
-        for (a in 0 until 5) {
+        for (a in 0 until 4) {
             if (n != a) {
                 buttons[a]!!.setBackgroundColor(Color.	rgb(98,11,238))
             }

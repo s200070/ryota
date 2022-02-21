@@ -3,7 +3,6 @@
     package="jp.ac.it_college.std.s20007.getupryota">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -13,10 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GetUpRyota">
+        <activity
+            android:name=".format.startActivity"
+            android:exported="false" />
 
-        <receiver android:name=".list.MyReceiver"
-            android:exported="false">
-        </receiver>
+        <receiver
+            android:name=".list.MyReceiver"
+            android:exported="false"></receiver>
+
         <activity
             android:name=".format.OmoroQuiz"
             android:exported="false" />

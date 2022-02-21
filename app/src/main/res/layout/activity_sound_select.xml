@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="戻る"
-        app:layout_constraintHorizontal_bias="0.19"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +23,6 @@
         android:layout_marginEnd="16dp"
         android:text="追加"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.656"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -40,10 +38,26 @@
 
     <ListView
         android:id="@+id/sound_list"
-        android:layout_width="409dp"
-        android:layout_height="675dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="86dp"
+        android:layout_marginBottom="78dp"
+        app:layout_constraintBottom_toTopOf="@+id/soundtext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.118" />
+
+    <TextView
+        android:id="@+id/soundtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="120dp"
+        android:text="TextView"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sound_name" />
+        app:layout_constraintTop_toBottomOf="@+id/sound_list" />
 </androidx.constraintlayout.widget.ConstraintLayout>

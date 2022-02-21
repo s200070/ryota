@@ -3,15 +3,17 @@ package jp.ac.it_college.std.s20007.getupryota.format
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import androidx.collection.arrayMapOf
 import androidx.fragment.app.DialogFragment
 import jp.ac.it_college.std.s20007.getupryota.MainActivity
+import jp.ac.it_college.std.s20007.getupryota.R
 import jp.ac.it_college.std.s20007.getupryota.databinding.ActivityEnglishWordsQuizBinding
-import org.json.JSONArray
 import org.jsoup.Jsoup
 
 class EnglishWordsQuiz : AppCompatActivity() {
@@ -22,6 +24,18 @@ class EnglishWordsQuiz : AppCompatActivity() {
     var random = arrayListOf<Int>()
     var count = 0
     private lateinit var binding: ActivityEnglishWordsQuizBinding
+    private lateinit var mediaPlayer: MediaPlayer
+    private val startTime : Long = 10000
+    val timer = object : CountDownTimer(startTime, 100) {
+        override fun onTick(millisUntilFinished: Long) {
+            binding.timeEn.text = "${millisUntilFinished/1000}"
+        }
+
+        override fun onFinish() {
+            Alarm()
+        }
+
+    }
 
 
 
@@ -30,10 +44,11 @@ class EnglishWordsQuiz : AppCompatActivity() {
         binding = ActivityEnglishWordsQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.timeEn.text = "${startTime/1000}"
+        timer.start()
         run()
 
     }
-
 
     fun run() {
         val handler = Handler(Looper.getMainLooper())
@@ -70,11 +85,14 @@ class EnglishWordsQuiz : AppCompatActivity() {
 
 
     fun answer(n:Int) {
+        timer.cancel()
+        mediaPlayer.stop()
         if (random[0] == random[n]) {
             val dialog = SimpleDialogFragment()
             dialog.show(supportFragmentManager, "simple")
             count++
             if (count <= 10) {
+                timer.start()
                 run()
             } else {
                 val intent = Intent(application, MainActivity::class.java)
@@ -86,6 +104,12 @@ class EnglishWordsQuiz : AppCompatActivity() {
             dialog.show(supportFragmentManager, "simple")
             run()
         }
+    }
+
+    private fun Alarm() {
+        mediaPlayer = MediaPlayer.create(this, R.raw.music1)
+        mediaPlayer.isLooping = true
+        mediaPlayer.start()
     }
 }
 
