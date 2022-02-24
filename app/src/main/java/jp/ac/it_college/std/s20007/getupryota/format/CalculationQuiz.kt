@@ -21,9 +21,6 @@ class CalculationQuiz : AppCompatActivity() {
     val startTime : Long = 10000
     private var count: Int= 0
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityCalculationQuizBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -36,9 +33,14 @@ class CalculationQuiz : AppCompatActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 binding.count.text = "${millisUntilFinished/1000}"
             }
+            val bool = intent.getIntExtra("bool", 0)
+
 
             override fun onFinish() {
-                Alarm()
+                if (bool == 0) {
+                    val sound = intent.getStringExtra("SOUND")
+                    Alarm(sound!!)
+                }
             }
 
         }
@@ -121,8 +123,25 @@ class CalculationQuiz : AppCompatActivity() {
 
     }
 
-    private fun Alarm() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.music1)
+    private fun Alarm(music:String) {
+        when (music) {
+            "music1" -> {
+                mediaPlayer = MediaPlayer.create(this, R.raw.music1)
+            }
+            "music2" -> {
+                mediaPlayer = MediaPlayer.create(this,R.raw.music2 )
+            }
+            "music3" -> {
+                mediaPlayer = MediaPlayer.create(this,R.raw.music3 )
+            }
+            "music4" -> {
+                mediaPlayer = MediaPlayer.create(this,R.raw.music4 )
+            }
+            else -> {
+                mediaPlayer = MediaPlayer.create(this,R.raw.music1 )
+            }
+
+        }
         mediaPlayer.isLooping = true
         mediaPlayer.start()
     }

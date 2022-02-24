@@ -8,6 +8,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.widget.ListView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.collection.arrayMapOf
@@ -39,6 +40,11 @@ class MainActivity : AppCompatActivity() {
 
         _helper = DatabaseHelper(this)
 
+        binding.addButton.setOnClickListener {
+            val intent = Intent(this, SettingAlarm::class.java)
+            startActivity(intent)
+        }
+
         try {
             databaseAlarm()
             setAlarm()
@@ -47,19 +53,14 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        binding.addButton.setOnClickListener {
-            val intent = Intent(this, SettingAlarm::class.java)
-            startActivity(intent)
-        }
 
         binding.listview.setOnItemClickListener { parent, view, position, id ->
             val intent = Intent(this, SettingAlarm::class.java)
+            intent.putExtra("id", alarms[position].id.toInt())
+            intent.putExtra("bool", true)
             startActivity(intent)
         }
     }
-
-
-
 
     fun databaseAlarm() {
         val db = _helper.writableDatabase

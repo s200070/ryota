@@ -13,7 +13,8 @@ class alarmName : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-
+        val name = intent.getStringExtra("name")
+        binding.alarmEdit.setText(name)
 
         binding.add2.setOnClickListener {
             val intent = Intent()

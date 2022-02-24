@@ -76,6 +76,7 @@ class AlarmListAdapter(context: Context, val list: List<alarm>) : ArrayAdapter<a
 
         val intent = Intent(context, startActivity::class.java)
         intent.putExtra("FORM", getItem(position)?.format)
+        intent.putExtra("SOUND", getItem(position)?.sound)
         val pendingIntent = PendingIntent.getActivity(
             context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT
         )

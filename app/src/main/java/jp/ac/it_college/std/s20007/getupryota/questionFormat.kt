@@ -64,6 +64,7 @@ class questionFormat : AppCompatActivity() {
     private fun intents(n: Int) {
         val buttons = mapOf(0 to EnglishWordsQuiz::class.java, 1 to OmoroQuiz::class.java, 2 to CalculationQuiz::class.java)
         val intent = Intent(this, buttons[n])
+        intent.putExtra("bool", 1)
         startActivity(intent)
     }
 

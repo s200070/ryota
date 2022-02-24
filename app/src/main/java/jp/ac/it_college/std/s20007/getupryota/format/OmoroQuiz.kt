@@ -97,9 +97,15 @@ class OmoroQuiz : AppCompatActivity() {
             binding.timeOmo.text = "${millisUntilFinished/1000}"
         }
 
+        val bool = intent.getIntExtra("bool", 0)
+
         override fun onFinish() {
-            Alarm()
+            if (bool == 0) {
+                val sound = intent.getStringExtra("SOUND")
+                Alarm(sound!!)
+            }
         }
+
     }
 
 
@@ -155,8 +161,26 @@ class OmoroQuiz : AppCompatActivity() {
 
     }
 
-    private fun Alarm() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.music1)
+    private fun Alarm(sound: String) {
+        val music = sound
+        when (music) {
+            "music1" -> {
+                mediaPlayer = MediaPlayer.create(this, R.raw.music1)
+            }
+            "music2" -> {
+                mediaPlayer = MediaPlayer.create(this,R.raw.music2 )
+            }
+            "music3" -> {
+                mediaPlayer = MediaPlayer.create(this,R.raw.music3 )
+            }
+            "music4" -> {
+                mediaPlayer = MediaPlayer.create(this,R.raw.music4 )
+            }
+            else -> {
+                mediaPlayer = MediaPlayer.create(this,R.raw.music1 )
+            }
+
+        }
         mediaPlayer.isLooping = true
         mediaPlayer.start()
     }

@@ -15,7 +15,7 @@ class SoundSelect : AppCompatActivity() {
         binding = ActivitySoundSelectBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var sound = ""
+        var sound = "music1"
         val array = arrayListOf("music1", "music2", "music3", "music4")
         binding.soundtext.text = array[0]
 

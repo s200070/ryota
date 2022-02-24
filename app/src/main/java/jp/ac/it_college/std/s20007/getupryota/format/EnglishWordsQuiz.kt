@@ -26,23 +26,25 @@ class EnglishWordsQuiz : AppCompatActivity() {
     private lateinit var binding: ActivityEnglishWordsQuizBinding
     private lateinit var mediaPlayer: MediaPlayer
     private val startTime : Long = 10000
-    val timer = object : CountDownTimer(startTime, 100) {
-        override fun onTick(millisUntilFinished: Long) {
-            binding.timeEn.text = "${millisUntilFinished/1000}"
-        }
-
-        override fun onFinish() {
-            Alarm()
-        }
-
-    }
-
-
+    private lateinit var timer: CountDownTimer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEnglishWordsQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        timer = object : CountDownTimer(startTime, 100) {
+            override fun onTick(millisUntilFinished: Long) {
+                binding.timeEn.text = "${millisUntilFinished/1000}"
+            }
+            val bool = intent.getIntExtra("bool", 0)
+            override fun onFinish() {
+                if (bool == 0) {
+                    val sound = intent.getStringExtra("SOUND")
+                    Alarm(sound!!)
+                }
+            }
+
+        }
 
         binding.timeEn.text = "${startTime/1000}"
         timer.start()
@@ -78,7 +80,6 @@ class EnglishWordsQuiz : AppCompatActivity() {
                 binding.chooseButton2.setOnClickListener { answer(num[1]) }
                 binding.chooseButton3.setOnClickListener { answer(num[2]) }
                 binding.chooseButton4.setOnClickListener { answer(num[3]) }
-
             }
         }.start()
     }
@@ -106,8 +107,25 @@ class EnglishWordsQuiz : AppCompatActivity() {
         }
     }
 
-    private fun Alarm() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.music1)
+    private fun Alarm(music: String) {
+        when (music) {
+            "music1" -> {
+                mediaPlayer = MediaPlayer.create(this, R.raw.music1)
+            }
+            "music2" -> {
+                mediaPlayer = MediaPlayer.create(this,R.raw.music2 )
+            }
+            "music3" -> {
+                mediaPlayer = MediaPlayer.create(this,R.raw.music3 )
+            }
+            "music4" -> {
+                mediaPlayer = MediaPlayer.create(this,R.raw.music4 )
+            }
+            else -> {
+                mediaPlayer = MediaPlayer.create(this,R.raw.music1 )
+            }
+
+        }
         mediaPlayer.isLooping = true
         mediaPlayer.start()
     }

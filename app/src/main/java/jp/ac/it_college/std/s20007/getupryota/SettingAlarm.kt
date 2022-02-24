@@ -6,13 +6,13 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
+import android.text.format.DateFormat
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import jp.ac.it_college.std.s20007.getupryota.Database.DatabaseHelper
 import jp.ac.it_college.std.s20007.getupryota.databinding.ActivitySettingAlarmBinding
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -24,7 +24,7 @@ class SettingAlarm : AppCompatActivity() {
     private var name = ""
     private var sound = ""
     private var format = 0
-    private var week = ""
+    private var week = arrayListOf<Int>()
     private var re = false
     private var weekString = ""
     var sun = 0
@@ -44,19 +44,72 @@ class SettingAlarm : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val current = LocalTime.now()
-        val formatter = DateTimeFormatter.ofPattern("HH:mm")
-        val result = current.format(formatter)
+        val id = intent.getIntExtra("id", 0)
+        val bool = intent.getBooleanExtra("bool", false)
+
+        if (bool) {
+            reSetAlarm(id)
+            binding.cancelButton.text = "消去"
+            binding.addKeep.text = "決定"
+            binding.cancelButton.setOnClickListener {
+                delete(id)
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+            }
+            binding.addKeep.setOnClickListener {
+                delete(id)
+                time = binding.editTextTime.text.toString()
+                re = binding.re.isChecked
+
+                setAlarms()
+
+                val intent = Intent(application, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+            }
+        } else {
+            binding.addKeep.setOnClickListener {
+
+                time = binding.editTextTime.text.toString()
+                re = binding.re.isChecked
+
+                setAlarms()
+
+                val intent = Intent(application, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+
+
+            }
+        }
+
+        setTime(bool)
+        val form = mapOf(0 to "英単語", 1 to "おもろクイズ", 2 to "計算問題", 3 to "なし")
+        var text = ""
+        if (sun == 1) text += "日"
+        if (mon == 1) text += "月"
+        if (tues == 1) text += "火"
+        if (wednes == 1) text += "水"
+        if (thurs == 1) text += "木"
+        if (fri == 1) text += "金"
+        if (satur == 1) text += "土"
+        binding.alarmNameAdd.setText(name)
+        binding.soundButton.setText(sound)
+        binding.formatButton.setText(form[format])
+        binding.weeksButton.setText(weekString)
+        binding.re.isChecked = re
+
 
         time_et = binding.editTextTime
-        time_et.setText(result)
-
         time_et.setOnClickListener {
             showTimePikerDialog()
         }
 
         binding.alarmNameAdd.setOnClickListener {
             val intent = Intent(this, alarmName::class.java)
+            name = binding.alarmNameAdd.text.toString()
+            intent.putExtra("name", name)
             getName.launch(intent)
         }
 
@@ -74,20 +127,6 @@ class SettingAlarm : AppCompatActivity() {
         binding.weeksButton.setOnClickListener {
             val intent = Intent(this, repeatWeek::class.java)
             getWeek.launch(intent)
-        }
-
-        binding.addKeep.setOnClickListener {
-
-            time = binding.editTextTime.text.toString()
-            re = binding.re.isChecked
-
-            setAlarms()
-
-            val intent = Intent(application, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
-
-
         }
     }
 
@@ -108,10 +147,15 @@ class SettingAlarm : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
+                val form = mapOf(0 to "英単語", 1 to "おもろクイズ", 2 to "計算問題", 3 to "なし")
                 val value = it.data?.getStringExtra("NAME")
                 val number = it.data?.getIntExtra("NUMBER", 3)
-                binding.formatButton.text = value
                 format = number!!
+
+                binding.formatButton.text = form[format]
+
+
+
             }
         }
 
@@ -121,8 +165,8 @@ class SettingAlarm : AppCompatActivity() {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val value = it.data?.getStringExtra("SOUND")
-                binding.soundButton.text = value
                 sound = value.toString()
+                binding.soundButton.text = sound
             }
         }
 
@@ -144,21 +188,20 @@ class SettingAlarm : AppCompatActivity() {
                     if (v == 5) fri = 1
                     if (v == 6) satur = 1
                 }
+
                 binding.weeksButton.text = text
-                weekString = text
-                week = value.toString()
+                week = value
 
             }
         }
 
     private fun showTimePikerDialog() {
-        //val calendar: Calendar = Calendar.getInstance()
 
         val cal = Calendar.getInstance()
         val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
-            time_et.setText(SimpleDateFormat("HH:mm").format(cal.time))
+            time_et.setText(DateFormat.format("HH:mm", cal.time))
             val cal = Calendar.getInstance()
         }
 
@@ -166,6 +209,86 @@ class SettingAlarm : AppCompatActivity() {
     }
 
 
+    private fun reSetAlarm(id: Int) {
+        _helper = DatabaseHelper(this)
+
+        val db = _helper.writableDatabase
+        val sql = """
+            SELECT * FROM timer
+            WHERE _id = ?
+        """.trimIndent()
+
+        val cursor = db.rawQuery(sql, arrayOf(id.toString()))
+
+        while (cursor.moveToNext()) {
+            val id = cursor.let {
+                val index = it.getColumnIndex("_id")
+                it.getLong(index)
+            }
+            val time = cursor.let {
+                val index = it.getColumnIndex("time")
+                it.getString(index)
+            }
+            val name = cursor.let {
+                val index = it.getColumnIndex("name")
+                it.getString(index)
+            }
+            val sound = cursor.let {
+                val index = it.getColumnIndex("sound")
+                it.getString(index)
+            }
+            val sun = cursor.let {
+                val index = it.getColumnIndex("sunday")
+                it.getLong(index).toInt()
+            }
+            val mon = cursor.let {
+                val index = it.getColumnIndex("monday")
+                it.getLong(index).toInt()
+            }
+            val tues = cursor.let {
+                val index = it.getColumnIndex("tuesday")
+                it.getLong(index).toInt()
+            }
+            val wednes = cursor.let {
+                val index = it.getColumnIndex("wednesday")
+                it.getLong(index).toInt()
+            }
+            val thurs = cursor.let {
+                val index = it.getColumnIndex("thursday")
+                it.getLong(index).toInt()
+            }
+            val fri = cursor.let {
+                val index = it.getColumnIndex("friday")
+                it.getLong(index).toInt()
+            }
+            val satur = cursor.let {
+                val index = it.getColumnIndex("saturday")
+                it.getLong(index).toInt()
+            }
+            val repeat = cursor.let {
+                val index = it.getColumnIndex("repeat")
+                it.getString(index)
+            }
+            val format = cursor.let {
+                val index = it.getColumnIndex("format")
+                it.getLong(index)
+            }
+            var text = ""
+            if (sun == 1) text += "日"
+            if (mon == 1) text += "月"
+            if (tues == 1) text += "火"
+            if (wednes == 1) text += "水"
+            if (thurs == 1) text += "木"
+            if (fri == 1) text += "金"
+            if (satur == 1) text += "土"
+            this.time = time
+            this.name = name
+            this.sound = sound
+            this.weekString = text
+            this.re = (repeat.toBoolean())
+            this.format = format.toInt()
+        }
+    }
 
     private fun setAlarms() {
         _helper = DatabaseHelper(this)
@@ -213,6 +336,32 @@ class SettingAlarm : AppCompatActivity() {
         }
 
         stmt.executeInsert()
+
+    }
+
+    private fun setTime(bool: Boolean) {
+        if (bool) {
+            time_et = binding.editTextTime
+            time_et.setText(time)
+        } else {
+            time_et = binding.editTextTime
+            val result = DateFormat.format("HH:mm", Calendar.getInstance())
+            time_et.setText(result)
+        }
+
+    }
+
+    private fun  delete(id: Int) {
+        _helper = DatabaseHelper(this)
+        val db = _helper.writableDatabase
+        val id = id
+        val delete = """
+            DELETE FROM timer WHERE _id = $id
+        """.trimIndent()
+
+        val stmt = db.compileStatement(delete)
+        stmt.executeUpdateDelete()
+
 
     }
 
